@@ -1,13 +1,12 @@
-<%@ page isELIgnored = "false"%>
+<%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup_module</title>
+    <title>Update_Users</title>
+
     <style>
         body {
             background-color: #fffcc2;
@@ -107,6 +106,7 @@
             width: 100%;
             margin-top: 20px;
         }
+
         #dropdown {
             width: 200px;
             padding: 8px;
@@ -170,73 +170,28 @@
         <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo">
         <div class="nav-buttons">
             <a href="index">Home</a>
-            <a href="signin">Sign In</a>
         </div>
     </header>
 
     <div class="form-container">
-        <h2>SignUp</h2>
-        <form action="signup" method="post">
 
-            <input type="text" id="username" name="userName" placeholder="Enter your user name" value="${dto.userName}">
-            <c:if test="${not empty userNameError}">
-                    <div style="color: red;">
-                        <c:out value="${userNameError}" />
-                    </div>
-                </c:if>
-
-            <input type="text" id="loginId" name="loginId" placeholder="Enter your login Id" value="${dto.loginId}">
-
-
-            <input type="text" id="email" name="email" placeholder="Enter your email" value="${dto.email}">
-            <c:if test="${not empty emailError}">
-                                <div style="color: red;">
-                                    <c:out value="${emailError}" />
-                                </div>
-                            </c:if>
-
-            <label>Gender:</label>
-            <input type="radio" name="gender" value="male">
-            <label for="male">Male</label>
-            <input type="radio" name="gender" value="female">
-            <label for="female">Female</label>
-
-
-            <input type="text" id="age" name="age" placeholder="Enter your age" value="${dto.age}">
-            <c:if test="${not empty ageError}">
-                                <div style="color: red;">
-                                    <c:out value="${ageError}" />
-                                </div>
-                            </c:if>
-
-
-            <input type="text" id="dob" name="dob" placeholder="Enter your DOB" value="${dto.dob}">
-
-
-            <input type="text" id="phoneNo" name="phoneNo" placeholder="Enter your Phone No" value="${dto.phoneNo}">
-            <c:if test="${not empty phoneNoError}">
-                    <div style="color: red;">
-                        <c:out value="${phoneNoError}" />
-                    </div>
-                </c:if>
-
-            <select id="dropdown" name="location">
+        <form action="updateDetails" method="post">
+            <h2>Update your Details</h2>
+            <input type="text" name="userName" placeholder="Enter your User Name" value="${dto.userName}">
+            <input type="hidden" name="loginId" value="${dto.loginId}" readonly>
+            <input type="text" name="email" placeholder="Enter your Email" readonly value="${dto.email}">
+            <input type="hidden" name="gender" value="${dto.gender}" readonly>
+            <input type="text" name="phoneNo" placeholder="Enter your Phone Number" value="${dto.phoneNo}">
+            <input type="hidden" name="dob" value="${dto.dob}" readonly>
+            <input type="text" name="age" placeholder="Enter your Age" value="${dto.age}">
+            <select id="dropdown" name="location" value="${dto.location}">
                             <c:forEach items="${list}" var="location">
                                 <option value= "${location}">${location}</option>
                             </c:forEach>
-                        </select>
-
-            <input type="password" id="password" name="password" placeholder="Enter your password" value="${dto.password}">
-            <c:if test="${not empty passwordError}">
-                    <div style="color: red;">
-                        <c:out value="${passwordError}" />
-                    </div>
-                </c:if>
-
-            <input type="password" id="confirmPassword" name="confirmPassword"
-                placeholder="Enter your Confirm Password" value="${dto.confirmPassword}">
-
-            <input type="submit" value="Submit">
+            </select>
+            <input type="password" name="password" placeholder="Enter your Password" >
+            <input type="password" name="confirmPassword" placeholder="Enter Your Confirm Password">
+            <input type="submit" value="Update">
         </form>
     </div>
 

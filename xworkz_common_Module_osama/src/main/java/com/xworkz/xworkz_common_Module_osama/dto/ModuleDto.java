@@ -1,5 +1,6 @@
 package com.xworkz.xworkz_common_Module_osama.dto;
 
+import com.xworkz.xworkz_common_Module_osama.enums.LocationEnum;
 import lombok.Data;
 
 @Data

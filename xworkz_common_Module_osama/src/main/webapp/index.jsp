@@ -86,7 +86,7 @@
         </div>
         <div class="buttons">
             <a href="signup">SignUp</a>
-            <a href="login">SignIn</a>
+            <a href="signin">SignIn</a>
         </div>
     </header>
 
