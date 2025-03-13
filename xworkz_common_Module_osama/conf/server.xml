@@ -93,7 +93,7 @@
     -->
             
     
-    <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1"/>
+    <Connector connectionTimeout="20000" port="2004" protocol="HTTP/1.1"/>
             
     
     <!-- A "Connector" using the shared thread pool-->

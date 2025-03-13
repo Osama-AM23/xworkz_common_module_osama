@@ -1,4 +1,4 @@
-<%@ page isELIgnored = "false"%>
+<%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,133 +6,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signin_module</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Signin Module</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <style>
-        body {
-            background-color: #fffcc2;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #ffe476, #ffeca1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
         }
 
         header {
+            position: absolute;
+            top: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #000000f3;
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 20px 10%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideDown 1s ease-in-out;
         }
 
         header img {
             max-height: 50px;
-
-        }
-
-        header .nav-buttons {
-            display: flex;
-            gap: 20px;
         }
 
         header .nav-buttons a {
             text-decoration: none;
-            color: #000;
+            color: white;
             font-size: 16px;
-            font-weight: bold;
             padding: 10px 15px;
             border-radius: 5px;
-            background-color: #fffcc2;
-            transition: background-color 0.3s;
+            background: #d2b647;
+            transition: 0.3s;
         }
 
         header .nav-buttons a:hover {
-            background-color: #ffd900;
-
+            background: #ffe75d;
+            transform: scale(1.1);
         }
 
         .form-container {
-            width: 40%;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
         }
 
         .form-container h2 {
-            text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
-
-        .form-container label {
-            display: inline-flex;
-            margin-bottom: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container input[type="number"],
-        .form-container input[type="date"],
-        .form-container input[type="tel"],
-        .form-container input[type="password"],
-        .form-container input[type="radio"],
-        .form-container select {
+        .form-container input {
             width: 100%;
             padding: 12px;
-            margin: 8px 0 18px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
         }
 
-        .form-container input[type="radio"] {
-            width: auto;
-            display: inline-block;
-            margin-right: 8px;
+        .form-container input:focus {
+            border-bottom: 2px solid #ffcc00;
+            transform: scale(1.02);
+        }
+
+        .form-container a {
+            display: block;
+            text-decoration: none;
+            color: #000000;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .form-container a:hover {
+            color: #ffaa00;
         }
 
         .form-container input[type="submit"] {
-            background-color: #ffe476f3;
-            color: white;
-            padding: 12px 25px;
+            background: #fff134;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 20px;
+            transition: 0.4s;
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: #ffeb14;
-        }
-        .error-message {
-            color: red;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 10px;
+            background: #ffe32c;
+            transform: scale(1.05);
+            box-shadow: 0px 5px 10px rgba(255, 253, 138, 0.6);
         }
 
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
         @media (max-width: 768px) {
             .form-container {
                 width: 80%;
-            }
-
-            header {
-                padding: 20px 5%;
             }
         }
     </style>
 </head>
 
 <body>
-
     <header>
         <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="logo">
         <div class="nav-buttons">
@@ -143,17 +156,16 @@
     <div class="form-container">
         <form action="signin" method="post">
             <h2>Enter your Details</h2>
+            <p style="color:red">${error}</p>
             <c:if test="${not empty errorMessage}">
-                    <div class="error-message">
-                        <p>${errorMessage}</p>
-                    </div>
-                </c:if>
-                
-            <h4><i class="bi bi-envelope"></i>   Email:</h4>
+                <div class="error-message">
+                    <p>${errorMessage}</p>
+                </div>
+            </c:if>
             <input type="text" name="email" placeholder="Enter your email">
-            <h4><i class="bi bi-key-fill"></i>    Password:</h4>
             <input type="password" name="password" placeholder="Enter your password">
-            <input type="submit" value="SIGNIN">
+            <a href="forgetPassword">Forgot password?</a>
+            <input type="submit" value="SIGN IN">
         </form>
     </div>
 </body>

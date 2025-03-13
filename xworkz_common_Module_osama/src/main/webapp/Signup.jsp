@@ -3,15 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup_module</title>
     <style>
         body {
-            background-color: #fffcc2;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif sans-serif;
+            background: linear-gradient(120deg, #fffcc2, #fff478);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -20,35 +19,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #000000f3;
+            background-color: #000;
             padding: 20px 10%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideDown 1s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         header img {
             max-height: 50px;
-
         }
 
-        header .nav-buttons {
-            display: flex;
-            gap: 20px;
-        }
-
-        header .nav-buttons a {
+        .nav-buttons a {
             text-decoration: none;
-            color: #000;
+            color: white;
             font-size: 16px;
-            font-weight: bold;
             padding: 10px 15px;
             border-radius: 5px;
-            background-color: #fffcc2;
-            transition: background-color 0.3s;
+            background: #ffeb14;
+            transition: 0.3s ease-in-out;
         }
 
-        header .nav-buttons a:hover {
-            background-color: #ffd900;
-
+        .nav-buttons a:hover {
+            background: #fefefd;
+            color: #000;
+            transform: scale(1.1);
         }
 
         .form-container {
@@ -57,7 +62,17 @@
             padding: 30px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .form-container h2 {
@@ -65,13 +80,9 @@
             margin-bottom: 20px;
         }
 
-
-        .form-container label {
-            display: inline-flex;
-            margin-bottom: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
+        .form-container h4 {
+            text-align: center;
+            margin-bottom: 15px;
         }
 
         .form-container input[type="text"],
@@ -80,7 +91,6 @@
         .form-container input[type="date"],
         .form-container input[type="tel"],
         .form-container input[type="password"],
-        .form-container input[type="radio"],
         .form-container select {
             width: 100%;
             padding: 12px;
@@ -88,79 +98,40 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
+            transition: 0.3s;
         }
 
-        .form-container input[type="radio"] {
-            width: auto;
-            display: inline-block;
-            margin-right: 8px;
+        .form-container input:focus, .form-container select:focus {
+            outline: none;
+            border-color: #ffeb14;
+            box-shadow: 0 0 5px rgba(255, 235, 20, 0.7);
+            transform: scale(1.02);
         }
 
         .form-container input[type="submit"] {
-            background-color: #ffe476f3;
-            color: white;
+            background-color: #ffcc00;
+            color: black;
             padding: 12px 25px;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
             width: 100%;
-            margin-top: 20px;
+            transition: 0.4s;
         }
-        #dropdown {
-            width: 200px;
-            padding: 8px;
-            font-size: 16px;
-            border: 2px solid #4CAF50;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            color: #333;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-
-        #dropdown::after {
-            content: '▼';
-            font-size: 16px;
-            color: #000;
-            position: absolute;
-            right: 10px;
-            top: calc(50% - 9px);
-            pointer-events: none;
-        }
-
-        #dropdown option {
-            padding: 10px;
-            background-color: #fffcc2;
-            color: #000;
-            font-size: 14px;
-        }
-
-        #dropdown option:hover {
-            background-color: #000;
-        }
-
-        #dropdown:focus {
-            outline: none;
-            border-color: #000;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
 
         .form-container input[type="submit"]:hover {
-            background-color: #ffeb14;
+            background-color: #ffd900;
+            transform: scale(1.05);
+            box-shadow: 0px 5px 10px rgba(255, 204, 0, 0.6);
         }
 
         @media (max-width: 768px) {
             .form-container {
                 width: 80%;
             }
-
-            header {
-                padding: 20px 5%;
-            }
         }
+
     </style>
 </head>
 
@@ -176,9 +147,11 @@
 
     <div class="form-container">
         <h2>SignUp</h2>
+        <h4>Enter your Details</h4>
         <form action="signup" method="post">
 
-            <input type="text" id="username" name="userName" placeholder="Enter your user name" value="${dto.userName}">
+            <input type="text" id="userName" onChange="onUserName()" name="userName" placeholder="Enter your user name" value="${dto.userName}">
+            <span id="displayUserName" style="color: red;"></span>
             <c:if test="${not empty userNameError}">
                     <div style="color: red;">
                         <c:out value="${userNameError}" />
@@ -188,12 +161,13 @@
             <input type="text" id="loginId" name="loginId" placeholder="Enter your login Id" value="${dto.loginId}">
 
 
-            <input type="text" id="email" name="email" placeholder="Enter your email" value="${dto.email}">
+            <input type="text" id="email" onChange="onEmail()" name="email" placeholder="Enter your email" value="${dto.email}">
+           <span id="displayEmail" style="color: red;"></span>
             <c:if test="${not empty emailError}">
                                 <div style="color: red;">
                                     <c:out value="${emailError}" />
                                 </div>
-                            </c:if>
+                            </c:if> </br>
 
             <label>Gender:</label>
             <input type="radio" name="gender" value="male">
@@ -213,33 +187,81 @@
             <input type="text" id="dob" name="dob" placeholder="Enter your DOB" value="${dto.dob}">
 
 
-            <input type="text" id="phoneNo" name="phoneNo" placeholder="Enter your Phone No" value="${dto.phoneNo}">
+            <input type="text" id="phoneNo" onChange="onPhoneNo()" name="phoneNo" placeholder="Enter your Phone Number" value="${dto.phoneNo}">
+            <span id="displayPhoneNo" style="color: red;"></span>
             <c:if test="${not empty phoneNoError}">
                     <div style="color: red;">
                         <c:out value="${phoneNoError}" />
                     </div>
-                </c:if>
+                </c:if> </br>
 
             <select id="dropdown" name="location">
-                            <c:forEach items="${list}" var="location">
-                                <option value= "${location}">${location}</option>
-                            </c:forEach>
-                        </select>
+                <c:forEach items="${list}" var="location">
+                    <option value="${location.name()}">
+                        ${location.name()}
+                    </option>
+                </c:forEach>
+            </select>
 
-            <input type="password" id="password" name="password" placeholder="Enter your password" value="${dto.password}">
-            <c:if test="${not empty passwordError}">
-                    <div style="color: red;">
-                        <c:out value="${passwordError}" />
-                    </div>
-                </c:if>
 
-            <input type="password" id="confirmPassword" name="confirmPassword"
-                placeholder="Enter your Confirm Password" value="${dto.confirmPassword}">
 
             <input type="submit" value="Submit">
         </form>
     </div>
 
+    <script>
+        function onUserName() {
+           console.log('user Name from jsp');
+           var name = document.getElementById('userName');
+           var nameValue = userName.value;
+
+           var xhttp = new XMLHttpRequest();
+           if (nameValue !== "") {
+             xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/userName/" + nameValue);
+             xhttp.send();
+
+             xhttp.onload = function () {
+                console.log(this.responseText)
+                document.getElementById("displayUserName").innerHTML = this.responseText;
+                }
+           }
+        }
+
+        function onEmail() {
+               console.log('user Email from jsp');
+               var name = document.getElementById('email');
+               var nameValue = email.value;
+
+               var xhttp = new XMLHttpRequest();
+               if (nameValue !== "") {
+                 xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/email/" + nameValue);
+                 xhttp.send();
+
+                 xhttp.onload = function () {
+                    console.log(this.responseText)
+                    document.getElementById("displayEmail").innerHTML = this.responseText;
+                    }
+               }
+        }
+
+      function onPhoneNo() {
+          console.log('Phone from jsp');
+          var name = document.getElementById('phoneNo');
+          var nameValue = phoneNo.value;
+
+          var xhttp = new XMLHttpRequest();
+          if (nameValue !== "") {
+               xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/phoneNo/" + nameValue);
+               xhttp.send();
+
+                       xhttp.onload = function () {
+                          console.log(this.responseText)
+                          document.getElementById("displayPhoneNo").innerHTML = this.responseText;
+                          }
+               }
+         }
+
+    </script>
 </body>
 
 </html>
