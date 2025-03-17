@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "getNameCount",
         query = "Select Count (me) From ModuleEntity me Where me.userName = :userName")
 
+@NamedQuery(name = "getLoginIdCount",
+        query = "Select Count (me) From ModuleEntity me Where me.loginId = :loginId")
 @NamedQuery(name = "getEmailCount",
         query = "Select Count (me) From ModuleEntity me Where me.email= :email")
 

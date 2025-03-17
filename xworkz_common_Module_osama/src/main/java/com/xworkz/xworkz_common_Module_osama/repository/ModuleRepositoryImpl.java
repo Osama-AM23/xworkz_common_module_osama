@@ -46,6 +46,27 @@ public class ModuleRepositoryImpl implements ModuleRepository {
     }
 
     @Override
+    public long getCountOfLoginId(String loginId) {
+        EntityManager eManag = emf.createEntityManager();
+        EntityTransaction eTrans = eManag.getTransaction();
+        Query query = eManag.createNamedQuery("getLoginIdCount");
+        query.setParameter("loginId", loginId);
+        Long count = (Long) query.getSingleResult();
+        try {
+            eTrans.begin();
+            eTrans.commit();
+        } catch (Exception e) {
+            if (eTrans.isActive()) {
+                eTrans.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            eManag.close();
+        }
+        return count;
+    }
+
+    @Override
     public long getCountOfEmail(String email) {
 
         EntityManager eManag = emf.createEntityManager();

@@ -23,6 +23,15 @@ public class SignupRestController {
         return "User Name is Already Exist";
     }
 
+    @GetMapping(value = "/loginId/{loginId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String onLoginId(@PathVariable String loginId) {
+        Long count = moduleService.getCountByLoginId(loginId);
+        if (count == 0) {
+            return "";
+        }
+        return "LoginId is Already Exist";
+    }
+
     @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onEmail(@PathVariable String email) {
         Long count = moduleService.getCountByEmail(email);
@@ -31,6 +40,11 @@ public class SignupRestController {
         }
         return "Email is Already Exist";
     }
+
+//    @GetMapping(value = "/age/{age}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String onAge(@PathVariable String age) {
+//        return "";
+//    }
 
     @GetMapping(value = "/phoneNo/{phoneNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onPhoneNo(@PathVariable String phoneNo) {

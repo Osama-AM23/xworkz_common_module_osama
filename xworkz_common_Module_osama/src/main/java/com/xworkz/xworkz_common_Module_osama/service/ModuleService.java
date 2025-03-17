@@ -14,6 +14,8 @@ public interface ModuleService {
 
     long getCountByUserName(String userName);
 
+    long getCountByLoginId(String loginId);
+
     long getCountByEmail(String email);
 
     long getCountByPhone(String phoneNo);

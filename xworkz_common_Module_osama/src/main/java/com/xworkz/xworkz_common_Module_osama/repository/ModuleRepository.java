@@ -10,6 +10,8 @@ public interface ModuleRepository {
 
     long getCountOfName(String userName);
 
+    long getCountOfLoginId(String loginId);
+
     long getCountOfEmail(String email);
 
     long getCountOfPhoneNo(String phoneNo);

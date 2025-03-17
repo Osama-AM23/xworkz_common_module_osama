@@ -141,6 +141,11 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    public long getCountByLoginId(String loginId) {
+        return moduleRepository.getCountOfLoginId(loginId);
+    }
+
+    @Override
     public long getCountByEmail(String email) {
         return moduleRepository.getCountOfEmail(email);
     }
