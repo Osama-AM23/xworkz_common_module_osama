@@ -10,6 +10,8 @@ public interface ModuleService {
 
     boolean validateAndSave(ModuleDto moduleDto, Model model);
 
+    String generateCaptcha();
+
     long getCountByUserName(String userName);
 
     long getCountByEmail(String email);

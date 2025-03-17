@@ -32,10 +32,6 @@ public class ModuleServiceImpl implements ModuleService {
 
     private BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
 
-    public ModuleServiceImpl() {
-        System.out.println("ModuleServiceImpl is Created");
-    }
-
     public String autoGeneratePassword() {
 
         String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -55,6 +51,19 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
+    public String generateCaptcha() {
+
+        String captchaChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321";
+
+        StringBuilder captcha = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i <= 6; i++) {
+            captcha.append(captchaChar.charAt(random.nextInt(captchaChar.length())));
+        }
+        return captcha.toString();
+    }
+
+    @Override
     public boolean validateAndSave(ModuleDto moduleDto, Model model) {
 
         boolean isValidate = true;
@@ -70,6 +79,18 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("userNameError", "Username must be between 3 and 25 characters and start with an uppercase letter");
             }
 
+            if(moduleDto.getLoginId() != null){
+                int loginId = Integer.parseInt(moduleDto.getLoginId());
+                if(loginId >=10 && loginId <=9999){
+                    mEntity.setLoginId(moduleDto.getLoginId());
+                } else{
+                    isValidate = false;
+                    model.addAttribute("loginIdError", "Login Id should be between 10 and 9999");
+                }
+            } else {
+                isValidate= false;
+                model.addAttribute("loginIdError", "Login Id is Required");
+            }
 
             if (moduleDto.getPhoneNo() != null && moduleDto.getPhoneNo().length() == 10 && moduleDto.getPhoneNo().matches("^[976]\\d{9}$")) {
                 mEntity.setPhoneNo(moduleDto.getPhoneNo());
@@ -78,7 +99,7 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("phoneNoError", "Phone number must be exactly 10 digits and start with 9, 7, or 6");
             }
 
-            if (moduleDto.getEmail() != null && moduleDto.getEmail().contains("@gmail.com") && moduleDto.getEmail().matches("^[a-z0-9]+@gmail\\.com$")) {
+            if (moduleDto.getEmail() != null && moduleDto.getEmail().contains("@gmail.com") && moduleDto.getEmail().matches("^[a-z0-9._]+@gmail\\.com$")) {
                 autoGeneratePassword = autoGeneratePassword();
                 mEntity.setPassword(autoGeneratePassword);
                 log.info("Auto Password :" + autoGeneratePassword);
@@ -92,11 +113,17 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("emailError", "Email must be contain @ and gmail.com and use any numbers");
             }
 
-            if (moduleDto.getAge() != null && moduleDto.getAge() >= 18) {
-                mEntity.setAge(moduleDto.getAge());
+            if (moduleDto.getAge() != null) {
+                int age = Integer.parseInt(moduleDto.getAge());
+                if (age >= 18) {
+                    mEntity.setAge(moduleDto.getAge());
+                } else {
+                    isValidate = false;
+                    model.addAttribute("ageError", "Age must be 18 or above");
+                }
             } else {
                 isValidate = false;
-                model.addAttribute("ageError", "Age must be above 18+");
+                model.addAttribute("ageError", "Invalid age format. Please enter a number.");
             }
 
 
@@ -210,11 +237,17 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("emailError", "Email must be contain @ and gmail.com and use any numbers");
             }
 
-            if (moduleDto.getAge() != null && moduleDto.getAge() >= 18) {
-                mEntity.setAge(moduleDto.getAge());
+            if (moduleDto.getAge() != null) {
+                int age = Integer.parseInt(moduleDto.getAge());
+                if (age >= 18) {
+                    mEntity.setAge(moduleDto.getAge());
+                } else {
+                    isValidate = false;
+                    model.addAttribute("ageError", "Age must be 18 or above");
+                }
             } else {
                 isValidate = false;
-                model.addAttribute("ageError", "Age must be above 18+");
+                model.addAttribute("ageError", "Invalid age format. Please enter a number.");
             }
 
             if (moduleDto.getPassword().equals(moduleDto.getConfirmPassword()) && moduleDto.getPassword().length() >= 8 && moduleDto.getPassword().matches(".*[0-9].*") && moduleDto.getPassword().matches(".*[!@#$%^&,.].*") && moduleDto.getPassword().matches(".*[A-Z].*")) {

@@ -42,13 +42,13 @@ public class ModuleEntity {
 
     private String userName;
 
-    private Integer loginId;
+    private String loginId;
 
     private String email;
 
     private String gender;
 
-    private Integer age;
+    private String age;
 
     private String dob;
 
