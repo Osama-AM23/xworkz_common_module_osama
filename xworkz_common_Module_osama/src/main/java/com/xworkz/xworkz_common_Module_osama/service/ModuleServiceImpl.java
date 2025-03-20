@@ -30,7 +30,7 @@ public class ModuleServiceImpl implements ModuleService {
 
     private String autoGeneratePassword;
 
-    private BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
+     private BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
 
     public String autoGeneratePassword() {
 
@@ -74,21 +74,23 @@ public class ModuleServiceImpl implements ModuleService {
 
             if (moduleDto.getUserName() != null && !moduleDto.getUserName().isEmpty() && moduleDto.getUserName().length() >= 3 && moduleDto.getUserName().length() <= 25 && moduleDto.getUserName().matches("[A-Z][a-z]*")) {
                 mEntity.setUserName(moduleDto.getUserName());
+                mEntity.setCreatedBy(moduleDto.getUserName());
+                mEntity.setCreatedDate(LocalDateTime.now());
             } else {
                 isValidate = false;
                 model.addAttribute("userNameError", "Username must be between 3 and 25 characters and start with an uppercase letter");
             }
 
-            if(moduleDto.getLoginId() != null){
+            if (moduleDto.getLoginId() != null) {
                 int loginId = Integer.parseInt(moduleDto.getLoginId());
-                if(loginId >=10 && loginId <=9999){
+                if (loginId >= 10 && loginId <= 9999) {
                     mEntity.setLoginId(moduleDto.getLoginId());
-                } else{
+                } else {
                     isValidate = false;
                     model.addAttribute("loginIdError", "Login Id should be between 10 and 9999");
                 }
             } else {
-                isValidate= false;
+                isValidate = false;
                 model.addAttribute("loginIdError", "Login Id is Required");
             }
 
@@ -222,25 +224,20 @@ public class ModuleServiceImpl implements ModuleService {
 
             if (moduleDto.getUserName() != null && !moduleDto.getUserName().isEmpty() && moduleDto.getUserName().length() >= 3 && moduleDto.getUserName().length() <= 25 && moduleDto.getUserName().matches("[A-Z][a-z]*")) {
                 mEntity.setUserName(moduleDto.getUserName());
+                mEntity.setUpdatedBy(moduleDto.getUserName());
+                mEntity.setUpdatedDate(LocalDateTime.now());
             } else {
                 isValidate = false;
                 model.addAttribute("userNameError", "Username must be between 3 and 25 characters and start with an uppercase letter");
             }
 
-            String strPhone = moduleDto.getPhoneNo() != null ? moduleDto.getPhoneNo().toString() : "";
-            if (moduleDto.getPhoneNo() != null && strPhone.length() == 10 && strPhone.matches("^[976]\\d{9}$")) {
+            if (moduleDto.getPhoneNo() != null && moduleDto.getPhoneNo().length() == 10 && moduleDto.getPhoneNo().matches("^[976]\\d{9}$")) {
                 mEntity.setPhoneNo(moduleDto.getPhoneNo());
             } else {
                 isValidate = false;
                 model.addAttribute("phoneNoError", "Phone number must be exactly 10 digits and start with 9, 7, or 6");
             }
 
-            if (moduleDto.getEmail() != null && moduleDto.getEmail().contains("@gmail.com") && moduleDto.getEmail().matches("^[a-z0-9]+@gmail\\.com$")) {
-                mEntity.setEmail(moduleDto.getEmail());
-            } else {
-                isValidate = false;
-                model.addAttribute("emailError", "Email must be contain @ and gmail.com and use any numbers");
-            }
 
             if (moduleDto.getAge() != null) {
                 int age = Integer.parseInt(moduleDto.getAge());
@@ -255,18 +252,8 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("ageError", "Invalid age format. Please enter a number.");
             }
 
-            if (moduleDto.getPassword().equals(moduleDto.getConfirmPassword()) && moduleDto.getPassword().length() >= 8 && moduleDto.getPassword().matches(".*[0-9].*") && moduleDto.getPassword().matches(".*[!@#$%^&,.].*") && moduleDto.getPassword().matches(".*[A-Z].*")) {
-                String encoded = encodedPassword.encode(moduleDto.getPassword());
-                mEntity.setPassword(encoded);
+            return moduleRepository.updateByEmail(mEntity);
 
-            } else {
-                isValidate = false;
-                model.addAttribute("passwordError", "Password must be at least 8 characters and must be contain Special character and Numbers");
-            }
-
-            if (isValidate) {
-                return moduleRepository.updateByEmail(mEntity);
-            }
         }
         return false;
     }

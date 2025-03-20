@@ -1,12 +1,9 @@
 package com.xworkz.xworkz_common_Module_osama.dto;
 
-import com.xworkz.xworkz_common_Module_osama.enums.LocationEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Email;
+import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -37,4 +34,8 @@ public class ModuleDto {
     private String confirmPassword;
 
     private String captcha;
+
+//    private String imgProperty;
+//
+//    private MultipartFile multipartFile;
 }

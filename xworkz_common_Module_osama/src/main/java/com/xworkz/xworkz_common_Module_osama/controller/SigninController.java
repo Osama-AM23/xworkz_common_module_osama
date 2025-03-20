@@ -2,7 +2,7 @@ package com.xworkz.xworkz_common_Module_osama.controller;
 
 import com.xworkz.xworkz_common_Module_osama.dto.ModuleDto;
 import com.xworkz.xworkz_common_Module_osama.entity.ModuleEntity;
-import com.xworkz.xworkz_common_Module_osama.enums.LocationEnum;
+import com.xworkz.xworkz_common_Module_osama.constant.LocationConstant;
 import com.xworkz.xworkz_common_Module_osama.service.ModuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class SigninController {
     @GetMapping("/signin")
     public String signin() {
         log.info("Signin page displaying");
-        return "Signin.jsp";
+        return "Signin";
     }
 
     @PostMapping("/signin")
@@ -39,34 +39,34 @@ public class SigninController {
 
         if (moduleEntity == null) {
             model.addAttribute("error", "Invalid email or password");
-            return "Signin.jsp";
+            return "Signin";
         }
         if (moduleEntity.getSigninCount() == 0) {
             model.addAttribute("email", email);
-            return "SigninSuccess.jsp";
+            return "SigninSuccess";
         }
         if (moduleEntity.getSigninCount() == -1) {
-            return "SetPassword.jsp";
+            return "SetPassword";
         }
         if (moduleEntity.getSigninCount() >= 3) {
-            return "Signin.jsp";
+            return "Signin";
         }
-        return "Signin.jsp";
+        return "Signin";
     }
     @GetMapping("/deleteData")
     public String deleteUser(@RequestParam("email") String email){
         moduleService.deleteUserByEmail(email);
         log.info(email +"Account is deleted");
-        return "DeleteData.jsp";
+        return "DeleteData";
     }
 
     @PostMapping("/setPassword")
     public String setPassword(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
 
         if (moduleService.forgetPasswordUpdate(email, password, confirmPassword)) {
-            return "SetPasswordSuccess.jsp";
+            return "SetPasswordSuccess";
         }
-        return "SetPassword.jsp";
+        return "SetPassword";
     }
 
     @GetMapping("/onUpdate")
@@ -74,24 +74,24 @@ public class SigninController {
         log.info("Email Controller:" + email);
         log.info("Update page display with email");
         model.addAttribute("email", email);
-        return "Update.jsp";
+        return "Update";
     }
 
     @GetMapping("/updateDetails")
     public String updateDetails(@RequestParam String email, Model model) {
         ModuleDto moduleDto = moduleService.findByEmail(email);
-        List<LocationEnum> location = new ArrayList<>(Arrays.asList(LocationEnum.values()));
+        List<LocationConstant> location = new ArrayList<>(Arrays.asList(LocationConstant.values()));
         System.out.println(location);
         model.addAttribute("list", location);
         model.addAttribute("dto", moduleDto);
         log.info("Update Details page Display");
-        return "UpdateDetails.jsp";
+        return "UpdateDetails";
     }
 
     @PostMapping("/updateDetails")
     public String updateDetails(ModuleDto moduleDto, Model model) {
         moduleService.updatebyEmail(moduleDto, model);
         model.addAttribute("email", moduleDto.getEmail());
-        return "UpdateSuccess.jsp";
+        return "UpdateSuccess";
     }
 }

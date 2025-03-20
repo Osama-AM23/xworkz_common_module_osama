@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
         query = "select ue From ModuleEntity ue where ue.email = :email")
 
 @NamedQuery(name = "updateByEmail",
-        query = "Update ModuleEntity me set me.userName = :userName, me.age = :age, me.dob = :dob, me.phoneNo = :phoneNo, me.location = :location, me.password = :password Where me.email = :email")
+        query = "Update ModuleEntity me set me.userName = :userName, me.age = :age, me.dob = :dob, me.phoneNo = :phoneNo, me.location = :location, me.password = :password, me.updatedBy = :updatedBy, me.updatedDate = : updatedDate Where me.email = :email")
 
 @NamedQuery(name = "getDataForUpdate",
         query = "select se from ModuleEntity se where se.email= :email")
@@ -36,7 +36,8 @@ import java.time.LocalDateTime;
 
 @NamedQuery(name = "forgetPasswordUpdate",
         query = "Update ModuleEntity me set me.password = :password, me.signinCount = 0 where me.email = :email")
-public class ModuleEntity {
+
+public class ModuleEntity extends AbstractAuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,4 +64,6 @@ public class ModuleEntity {
     private Integer signinCount = -1;
 
     private LocalDateTime lockTime;
+
+//    private String imgProperty;
 }

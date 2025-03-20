@@ -21,14 +21,14 @@ public class ForgetPasswordController {
     @GetMapping("/forgetPassword")
     public String onForgetPassword(String email) {
         log.info("Displaying the forget password page");
-        return "ForgetPassword.jsp";
+        return "ForgetPassword";
     }
 
     @PostMapping("/forgetPassword")
     public String getByEmail(String email, String password, String confirmPassword) {
         if (moduleService.forgetPasswordUpdate(email, password, confirmPassword)) {
-            return "Signin.jsp";
+            return "Signin";
         }
-        return "ForgetPassword.jsp";
+        return "ForgetPassword";
     }
 }

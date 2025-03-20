@@ -1,5 +1,5 @@
 <%@ page isELIgnored="false" %>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!DOCTYPE html>
         <html lang="en">
 
@@ -178,71 +178,142 @@
 
                 <form action="updateDetails" method="post">
                     <h2>Update your Details</h2>
-                    <input type="text" name="userName" placeholder="Enter your User Name" value="${dto.userName}">
-                    <span id="userNameJS" style="color: red;"></span>
+                    <input type="text" id="userName" name="userName" onChange="onUserName()" placeholder="Enter your User Name" value="${dto.userName}">
+                    <span id="displayUserName" style="color: red;"></span>
                     <input type="hidden" name="loginId" value="${dto.loginId}" readonly>
                     <input type="text" name="email" placeholder="Enter your Email" readonly value="${dto.email}">
                     <input type="hidden" name="gender" value="${dto.gender}" readonly>
-                    <input type="text" name="phoneNo" placeholder="Enter your Phone Number" value="${dto.phoneNo}">
-                    <span id="phoneNoJS" style="color: red;"></span>
+                    <input type="text" id="phoneNo" name="phoneNo" onChange="onPhoneNo()" placeholder="Enter your Phone Number" value="${dto.phoneNo}">
+                    <span id="displayPhoneNo" style="color: red;"></span>
                     <input type="hidden" name="dob" value="${dto.dob}" readonly>
-                    <input type="text" name="age" placeholder="Enter your Age" value="${dto.age}">
-                    <span id="ageJS" style="color: red;"></span>
+                    <input type="text" id="age" name="age" onChange="onAge()" placeholder="Enter your Age" value="${dto.age}">
+                    <span id="displayAge" style="color: red;"></span> <br>
                     <select id="dropdown" name="location" value="${dto.location}">
                         <c:forEach items="${list}" var="location">
                             <option value="${location}">${location}</option>
                         </c:forEach>
                     </select>
+                    <input type="hidden" name="password" value="${dto.password}">
+                    <input type="hidden" name="confirmPassword" value="${dto.confirmPassword}">
                     <input type="submit" value="Update">
                 </form>
             </div>
-
             <script>
-                const checkbox = () => {
-                    const userNameError = document.getElementById("userNameJS").innerHTML = "";
-                    const phoneNoError = document.getElementById("phoneNoJS").innerHTML = "";
-                    const ageError = document.getElementById("ageJS").innerHTML = "";
+                function onUserName() {
+                    console.log('user Name from Ajax & Js');
+                    var nameElement = document.getElementById('userName');
+                    var nameValue = nameElement.value.trim();
+                    var displayError = document.getElementById("displayUserName");
+                    var submitButton = document.getElementById("submitButton");
 
-                    const validation = userNameError && phoneNoError && ageError
+                    var usernamePattern = /^[A-Z][a-z]{2,24}$/;
 
-                    document.getElementById("submitButton") != validation;
-                }
 
-                const validate = (event) => {
-                    const { name, value } = event.target;
-                    let isCheck = true;
-
-                    if (name === "userName" && value.length < 3) {
-                        let check = document.getElementById("userNameJS");
-                        check.innerHTML = "Give Proper User Name"
-                        isCheck = false;
+                    if (nameValue === "") {
+                        displayError.innerHTML = "User Name cannot be empty.";
+                        submitButton.disabled = true;
+                        return;
                     }
 
-                    if (name === "phoneNo" && value) {
-                        let check = Document.getElementById("phoneNoJS");
 
-                        let phonePattern = /^[967]\d{9}$/;
+                    if (!usernamePattern.test(nameValue)) {
+                        displayError.innerHTML = "Invalid User Name! It must contain only letters 3-25 characters";
+                        submitButton.disabled = true;
+                        return;
+                    }
 
-                        if (!phonePattern.test(value)) {
-                            check.innerHTML = "Give Proper Phone Number, It should be 10 Digits"
-                            isCheck = false;
+                    var xhttp = new XMLHttpRequest();
+                    if (nameValue !== "") {
+                        xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/userName/" + nameValue);
+                        xhttp.send();
+
+                        xhttp.onload = function () {
+                            console.log(this.responseText)
+                            document.getElementById("displayUserName").innerHTML = this.responseText;
                         }
                     }
+                }
 
-                    if (name === "age" && value) {
-                        let check = Document.getElementById("ageJS");
+                function onAge() {
+                    console.log('Age from Ajax & Js');
+                    var nameElement = document.getElementById('age');
+                    var nameValue = nameElement.value.trim();
+                    var displayError = document.getElementById("displayAge");
+                    var submitButton = document.getElementById("submitButton");
 
-                        var ageNumber = parseInt(value, 10);
-                        if (ageNumber < 18) {
-                            check.innerHTML = "Age should be 18+";
-                            isCheck = false;
-                        }
+                    var agePattern = /^\d+$/;
 
+
+                    if (agePattern === "") {
+                        displayError.innerHTML = "Age cannot be empty.";
+                        submitButton.disabled = true;
+                        return;
                     }
 
+
+                    if (!agePattern.test(nameValue)) {
+                        displayError.innerHTML = "Invalid Age! Only numbers are allowed";
+                        submitButton.disabled = true;
+                        return;
+                    }
+                    var ageNumber = parseInt(nameValue, 10);
+                        if (ageNumber <= 18 || ageNumber >= 100) {
+                            displayError.innerHTML = "Age must be 18";
+                            submitButton.disabled = true;
+                            return;
+                        }
+                        submitButton.disabled = false;
+                        displayError.innerHTML = "";
+
+                    var xhttp = new XMLHttpRequest();
+                    if (nameValue !== "") {
+                        xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/age/" + nameValue);
+                        xhttp.send();
+
+                        xhttp.onload = function () {
+                            console.log(this.responseText)
+                            document.getElementById("displayAge").innerHTML = this.responseText;
+                        }
+                    }
                 }
+
+                function onPhoneNo() {
+                    console.log('Phone from Ajax & Js');
+                    var nameElement = document.getElementById('phoneNo'); // Correct variable
+                    var phoneValue = nameElement.value.trim();
+                    var displayError = document.getElementById("displayPhoneNo");
+                    var submitButton = document.getElementById("submitButton");
+                    var phonePattern = /^[967]\d{9}$/;
+
+                    if (phoneValue === "") {
+                        displayError.innerHTML = "Phone Number cannot be empty.";
+                        submitButton.disabled = true; // Fixed 'disable' to 'disabled'
+                        return;
+                    }
+
+                    if (!phonePattern.test(phoneValue)) {
+                        displayError.innerHTML = "Invalid Phone Number! It must be exactly 10 digits";
+                        submitButton.disabled = true;
+                        return;
+                    }
+
+                    displayError.innerHTML = "";
+                    submitButton.disabled = false;
+
+                    var xhttp = new XMLHttpRequest();
+                    if (phoneValue !== "") {
+                        xhttp.open("GET", "http://localhost:2004/xworkz_common_Module_osama/phoneNo/" + phoneValue);
+                        xhttp.send();
+
+                        xhttp.onload = function () {
+                            console.log(this.responseText);
+                            displayError.innerHTML = this.responseText;
+                        }
+                    }
+                }
+
+
             </script>
-
         </body>
 
         </html>

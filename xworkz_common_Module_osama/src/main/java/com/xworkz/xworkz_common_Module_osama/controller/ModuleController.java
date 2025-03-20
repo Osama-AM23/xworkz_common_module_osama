@@ -12,7 +12,7 @@ public class ModuleController {
     @GetMapping("/index")
     public String index() {
         log.info("Home page is displaying");
-        return "index.jsp";
+        return "index";
     }
 
 }

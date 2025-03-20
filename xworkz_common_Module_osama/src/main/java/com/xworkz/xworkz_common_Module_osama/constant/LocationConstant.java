@@ -1,6 +1,6 @@
-package com.xworkz.xworkz_common_Module_osama.enums;
+package com.xworkz.xworkz_common_Module_osama.constant;
 
-public enum LocationEnum {
+public enum LocationConstant {
 
     DHARMAPURI, SALEM, NAMAKKAL, KRISHNIGIRI, HOSUR, BANGALORE, CHENNAI, TRICHY, HYDERABAD, MANGALURU, MYSURU;
 

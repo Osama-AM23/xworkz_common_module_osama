@@ -2,6 +2,7 @@ package com.xworkz.xworkz_common_Module_osama.repository;
 
 import com.xworkz.xworkz_common_Module_osama.entity.ModuleEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -9,8 +10,8 @@ import javax.persistence.*;
 @Slf4j
 @Repository
 public class ModuleRepositoryImpl implements ModuleRepository {
-
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("xworkz_commonModule");
+    @Autowired
+    private EntityManagerFactory emf;
 
 
     @Override
@@ -165,6 +166,8 @@ public class ModuleRepositoryImpl implements ModuleRepository {
             query.setParameter("location", moduleEntity.getLocation());
             query.setParameter("password", moduleEntity.getPassword());
             query.setParameter("email", moduleEntity.getEmail());
+            query.setParameter("updatedBy", moduleEntity.getUpdatedBy());
+            query.setParameter("updatedDate", moduleEntity.getUpdatedDate());
 
             int updatedCount = query.executeUpdate();
             transaction.commit();

@@ -41,11 +41,6 @@ public class SignupRestController {
         return "Email is Already Exist";
     }
 
-//    @GetMapping(value = "/age/{age}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String onAge(@PathVariable String age) {
-//        return "";
-//    }
-
     @GetMapping(value = "/phoneNo/{phoneNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onPhoneNo(@PathVariable String phoneNo) {
         Long count = moduleService.getCountByPhone(phoneNo);

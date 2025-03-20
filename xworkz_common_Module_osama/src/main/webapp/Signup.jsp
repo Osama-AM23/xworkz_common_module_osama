@@ -256,9 +256,13 @@
                             </c:forEach>
                         </select>
 
-                        <input type="text" name="captcha" placeholder="Enter CAPTCHA">
-                        <img src="captcha" alt="CAPTCHA Image"> <br> <br>
-                        <a href="signup">Refresh</a> <br>
+                        <input type="text" name="captcha" placeholder="Enter Captcha" /><br>
+
+                            <p style="font-weight: bold; font-size: 18px;">
+                               <span style="color: yellow;">${captchaText}</span>
+                            </p>
+
+                        <a href="signup">Refresh CAPTCHA</a><br>
                         <span style="color: red;">${captchaError}</span> <br>
                         <br>
                         <input type="submit" value="Submit">
@@ -391,7 +395,7 @@
             return;
         }
 
-        if (!emailPattern.test(emailPattern)) {
+        if (!emailPattern.test(nameValue)) {
             displayError.innerHTML = "Invalid Email! and it must end with @gmail.com.";
             return;
         }
