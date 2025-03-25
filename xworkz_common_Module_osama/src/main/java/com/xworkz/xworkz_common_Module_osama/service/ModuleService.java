@@ -3,6 +3,7 @@ package com.xworkz.xworkz_common_Module_osama.service;
 import com.xworkz.xworkz_common_Module_osama.dto.ModuleDto;
 import com.xworkz.xworkz_common_Module_osama.entity.ModuleEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +29,7 @@ public interface ModuleService {
 
     ModuleDto findByEmail(String email);
 
-    boolean updatebyEmail(ModuleDto moduleDto, Model model);
+    boolean updatebyEmail(ModuleDto moduleDto, MultipartFile multipartFile, Model model);
 
     boolean forgetPasswordUpdate(String email, String password, String confirmPassword);
 

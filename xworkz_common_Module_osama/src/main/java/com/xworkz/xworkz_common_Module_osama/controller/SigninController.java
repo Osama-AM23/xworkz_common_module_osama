@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/")
@@ -53,10 +59,11 @@ public class SigninController {
         }
         return "Signin";
     }
+
     @GetMapping("/deleteData")
-    public String deleteUser(@RequestParam("email") String email){
+    public String deleteUser(@RequestParam("email") String email) {
         moduleService.deleteUserByEmail(email);
-        log.info(email +"Account is deleted");
+        log.info(email + "Account is deleted");
         return "DeleteData";
     }
 
@@ -89,9 +96,22 @@ public class SigninController {
     }
 
     @PostMapping("/updateDetails")
-    public String updateDetails(ModuleDto moduleDto, Model model) {
-        moduleService.updatebyEmail(moduleDto, model);
+    public String updateDetails(@RequestParam("file") MultipartFile multipartFile,ModuleDto moduleDto,Model model) throws IOException {
+
         model.addAttribute("email", moduleDto.getEmail());
+        byte[] bytes = multipartFile.getBytes();
+
+        log.info("Bite Value :" + multipartFile.getBytes());
+        log.info("Img Name :" + multipartFile.getOriginalFilename());
+
+        Path path = Paths.get("M:\\Fileupload\\"  + multipartFile.getOriginalFilename());
+
+        Files.write(path, bytes);
+
+        String fileName = path.getFileName().toString();
+        log.info("File Name ::" + fileName);
+
+        moduleService.updatebyEmail(moduleDto,multipartFile, model);
         return "UpdateSuccess";
     }
 }

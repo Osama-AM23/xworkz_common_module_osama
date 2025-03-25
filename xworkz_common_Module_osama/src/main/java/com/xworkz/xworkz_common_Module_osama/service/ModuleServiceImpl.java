@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -214,13 +215,17 @@ public class ModuleServiceImpl implements ModuleService {
 
     // update the details by email
     @Override
-    public boolean updatebyEmail(ModuleDto moduleDto, Model model) {
+    public boolean updatebyEmail(ModuleDto moduleDto, MultipartFile multipartFile, Model model) {
 
         boolean isValidate = true;
 
         if (moduleDto != null) {
+            moduleDto.setFileName(multipartFile.getOriginalFilename());
+            moduleDto.setImgProperty(multipartFile.getContentType());
 
             BeanUtils.copyProperties(moduleDto, mEntity);
+
+            System.out.println("module dto================="+moduleDto);
 
             if (moduleDto.getUserName() != null && !moduleDto.getUserName().isEmpty() && moduleDto.getUserName().length() >= 3 && moduleDto.getUserName().length() <= 25 && moduleDto.getUserName().matches("[A-Z][a-z]*")) {
                 mEntity.setUserName(moduleDto.getUserName());
@@ -252,6 +257,7 @@ public class ModuleServiceImpl implements ModuleService {
                 model.addAttribute("ageError", "Invalid age format. Please enter a number.");
             }
 
+            System.out.println("module entity=============================="+mEntity);
             return moduleRepository.updateByEmail(mEntity);
 
         }

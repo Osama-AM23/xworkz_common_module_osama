@@ -35,7 +35,9 @@ public class ModuleDto {
 
     private String captcha;
 
-//    private String imgProperty;
-//
+    private String imgProperty;
+
+    private String fileName;
+
 //    private MultipartFile multipartFile;
 }

@@ -168,10 +168,12 @@ public class ModuleRepositoryImpl implements ModuleRepository {
             query.setParameter("email", moduleEntity.getEmail());
             query.setParameter("updatedBy", moduleEntity.getUpdatedBy());
             query.setParameter("updatedDate", moduleEntity.getUpdatedDate());
+            query.setParameter("imgProperty" , moduleEntity.getImgProperty());
+            query.setParameter("fileName", moduleEntity.getFileName());
 
             int updatedCount = query.executeUpdate();
             transaction.commit();
-            return updatedCount > 0;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             if (transaction.isActive()) {

@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -21,7 +22,7 @@ import java.util.Properties;
 @EnableWebMvc
 public class SpringConfiguration {
 
-//    private int imgSize = 5 * 1024 * 1024;
+   //private int imgSize = 5 * 1024 * 1024;
 
     public SpringConfiguration() {
         System.out.println();
@@ -55,14 +56,19 @@ public class SpringConfiguration {
         dataSource.setPassword("Xworkzodc@123");
         return dataSource;
     }
-/*
+
+//    @Bean
+//    public CommonsMultipartResolver getCommonsMultipartResolver() {
+//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+//        multipartResolver.setMaxUploadSize(imgSize);
+//        multipartResolver.setMaxInMemorySize(imgSize);
+//        return multipartResolver;
+//    }
+
     @Bean
-    public CommonsMultipartResolver getCommonsMultipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(imgSize);
-        multipartResolver.setMaxInMemorySize(imgSize);
-        return multipartResolver;
-    }*/
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
 
     @Bean
     public ViewResolver internalViewResolver() {

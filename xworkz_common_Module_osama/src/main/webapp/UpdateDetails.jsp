@@ -153,6 +153,34 @@
                     background-color: #ffeb14;
                 }
 
+                .form-container input[type="file"] {
+                      width: 100%;
+                      padding: 10px;
+                      margin: 10px 0;
+                      border: 2px solid #4CAF50;
+                      border-radius: 5px;
+                      background-color: #f9f9f9;
+                      font-size: 16px;
+                      color: #333;
+                      cursor: pointer;
+                }
+
+                .form-container input[type="file"]::-webkit-file-upload-button {
+                      background-color: #ffe476f3;
+                      color: white;
+                      padding: 10px 15px;
+                      border: none;
+                      border-radius: 5px;
+                      font-size: 14px;
+                      font-weight: bold;
+                      cursor: pointer;
+                      transition: background-color 0.3s ease-in-out;
+                }
+
+                .form-container input[type="file"]::-webkit-file-upload-button:hover {
+                      background-color: #ffeb14;
+                }
+
                 @media (max-width: 768px) {
                     .form-container {
                         width: 80%;
@@ -176,7 +204,7 @@
 
             <div class="form-container">
 
-                <form action="updateDetails" method="post">
+                <form action="updateDetails" method="post" enctype="multipart/form-data">
                     <h2>Update your Details</h2>
                     <input type="text" id="userName" name="userName" onChange="onUserName()" placeholder="Enter your User Name" value="${dto.userName}">
                     <span id="displayUserName" style="color: red;"></span>
@@ -195,6 +223,7 @@
                     </select>
                     <input type="hidden" name="password" value="${dto.password}">
                     <input type="hidden" name="confirmPassword" value="${dto.confirmPassword}">
+                    <input type="file" name="file" id="imgProperty" accept=".jpg, .jpeg, .png, .pdf, .docx">
                     <input type="submit" value="Update">
                 </form>
             </div>

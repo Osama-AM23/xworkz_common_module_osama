@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
         query = "select ue From ModuleEntity ue where ue.email = :email")
 
 @NamedQuery(name = "updateByEmail",
-        query = "Update ModuleEntity me set me.userName = :userName, me.age = :age, me.dob = :dob, me.phoneNo = :phoneNo, me.location = :location, me.password = :password, me.updatedBy = :updatedBy, me.updatedDate = : updatedDate Where me.email = :email")
+        query = "Update ModuleEntity me set me.userName = :userName, me.age = :age, me.dob = :dob, me.phoneNo = :phoneNo, me.location = :location, me.password = :password, me.updatedBy = :updatedBy, me.updatedDate = : updatedDate, me.fileName = : fileName, me.imgProperty = :imgProperty  Where me.email = :email")
 
 @NamedQuery(name = "getDataForUpdate",
         query = "select se from ModuleEntity se where se.email= :email")
@@ -65,5 +65,7 @@ public class ModuleEntity extends AbstractAuditEntity {
 
     private LocalDateTime lockTime;
 
-//    private String imgProperty;
+    private String fileName;
+
+    private String imgProperty;
 }
