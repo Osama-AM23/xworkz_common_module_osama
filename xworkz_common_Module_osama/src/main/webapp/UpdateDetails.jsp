@@ -223,7 +223,7 @@
                     </select>
                     <input type="hidden" name="password" value="${dto.password}">
                     <input type="hidden" name="confirmPassword" value="${dto.confirmPassword}">
-                    <input type="file" name="file" id="imgProperty" accept=".jpg, .jpeg, .png, .pdf, .docx">
+                    <input type="file" name="file" id="imgProperty" accept=".jpg, .jpeg, .png">
                     <input type="submit" value="Update">
                 </form>
             </div>

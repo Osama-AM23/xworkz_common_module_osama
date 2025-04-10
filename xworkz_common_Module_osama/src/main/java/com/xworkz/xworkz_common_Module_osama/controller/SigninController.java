@@ -5,6 +5,7 @@ import com.xworkz.xworkz_common_Module_osama.entity.ModuleEntity;
 import com.xworkz.xworkz_common_Module_osama.constant.LocationConstant;
 import com.xworkz.xworkz_common_Module_osama.service.ModuleService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -104,14 +107,28 @@ public class SigninController {
         log.info("Bite Value :" + multipartFile.getBytes());
         log.info("Img Name :" + multipartFile.getOriginalFilename());
 
-        Path path = Paths.get("M:\\Fileupload\\"  + multipartFile.getOriginalFilename());
+        Path path = Paths.get("M:\\Fileupload\\"  +multipartFile.getOriginalFilename());
 
         Files.write(path, bytes);
 
         String fileName = path.getFileName().toString();
         log.info("File Name ::" + fileName);
-
         moduleService.updatebyEmail(moduleDto,multipartFile, model);
+        model.addAttribute("img" , moduleDto.getFileName());
         return "UpdateSuccess";
     }
+
+    @GetMapping("/download")
+    public void download(HttpServletResponse servletResponse, @RequestParam String fileName) throws IOException {
+        servletResponse.setContentType("image/jpg");
+        File file = new File("M:\\Fileupload\\"+fileName);
+        InputStream inupt = new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream outputStream = servletResponse.getOutputStream();
+        IOUtils.copy(inupt, outputStream);
+        servletResponse.flushBuffer();
+
+    }
+
+
+
 }
